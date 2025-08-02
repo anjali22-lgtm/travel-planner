@@ -1,0 +1,49 @@
+.plan-trip-container {
+  background-image: url('../assets/road.jpg'); /* replace with your image path */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;  /* centers horizontally */
+  align-items: center;      /* centers vertically */
+  color: white;
+}
+
+.plan-form {
+  background-color: rgba(0, 0, 0, 0.6); /* dark semi-transparent box */
+  padding: 30px 40px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 350px;
+}
+
+.plan-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+}
+
+.plan-form input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  margin-top: 6px;
+  font-size: 1rem;
+}
+
+.plan-form button {
+  padding: 10px;
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.plan-form button:hover {
+  background-color: #0088cc;
+}

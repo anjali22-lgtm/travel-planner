@@ -1,0 +1,17 @@
+/* TransportAndMap.css */
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.left-panel {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.right-panel {
+  flex: 2;
+}
