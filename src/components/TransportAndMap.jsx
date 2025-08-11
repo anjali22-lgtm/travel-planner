@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
+import { getCoordinates } from '../utils/geocode';
 
 function Routing({ source, destination }) {
   const map = useMap();
@@ -27,12 +28,11 @@ function TransportAndMap() {
   const [sourceCoords, setSourceCoords] = useState(null);
   const [destCoords, setDestCoords] = useState(null);
 
-  const getCoordinates = async (place) => {
-    const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${place}`);
-    const data = await response.json();
-    if (data.length > 0) {
-      return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
-    } else {
+  const lookup = async (place) => {
+    try {
+      const { lat, lon } = await getCoordinates(place);
+      return [lat, lon];
+    } catch (e) {
       alert(`Could not find location: ${place}`);
       return null;
     }
@@ -40,8 +40,8 @@ function TransportAndMap() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const src = await getCoordinates(sourceInput);
-    const dst = await getCoordinates(destInput);
+    const src = await lookup(sourceInput);
+    const dst = await lookup(destInput);
 
     if (src && dst) {
       setSourceCoords(src);

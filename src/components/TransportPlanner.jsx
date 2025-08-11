@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "./TransportPlanner.css";
 import "leaflet-routing-machine";
+import { getCoordinates } from "../utils/geocode";
 
 const defaultIcon = new L.Icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -42,26 +43,26 @@ function TransportPlanner() {
   const [distance, setDistance] = useState(null);
   const [travelTime, setTravelTime] = useState(null);
 
-  const handleOriginChange = (e) => {
-    const location = e.target.value;
-    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.length > 0) {
-          setOrigin({ lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) });
-        }
-      });
+  const handleOriginChange = async (e) => {
+    const location = e.target.value.trim();
+    if (!location) return;
+    try {
+      const { lat, lon } = await getCoordinates(location);
+      setOrigin({ lat, lng: lon });
+    } catch (err) {
+      console.error("Origin geocode failed:", err);
+    }
   };
 
-  const handleDestinationChange = (e) => {
-    const location = e.target.value;
-    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.length > 0) {
-          setDestination({ lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) });
-        }
-      });
+  const handleDestinationChange = async (e) => {
+    const location = e.target.value.trim();
+    if (!location) return;
+    try {
+      const { lat, lon } = await getCoordinates(location);
+      setDestination({ lat, lng: lon });
+    } catch (err) {
+      console.error("Destination geocode failed:", err);
+    }
   };
 
   return (

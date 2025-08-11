@@ -4,11 +4,7 @@ export async function getCoordinates(placeName) {
     placeName
   )}&format=json&limit=1`;
 
-  const response = await fetch(url, {
-    headers: {
-      "User-Agent": "travel-app-demo", // Required by Nominatim
-    },
-  });
+  const response = await fetch(url);
 
   const data = await response.json();
 
